@@ -1,0 +1,28 @@
+{
+  "name": "@nycopportunity/front-end-challenge",
+  "version": "1.0.1",
+  "description": "Create an **accessible form** that uses questions fetched from a REST endpoint. The questions will ask for **personally identifiable information** from public users who will fill it out. For this particular exercise the CSS styling of the form does not need to be considered. Create an application script using **JavaScript ES syntax** that does the following.",
+  "main": "serve.js",
+  "scripts": {
+      "start": "concurrently \"npm start --prefix client\"",
+      "client": "npm start --prefix client",
+      "server": "npm start --prefix server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NYCOpportunity/front-end-assignment.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/NYCOpportunity/front-end-assignment/issues"
+  },
+  "homepage": "https://github.com/NYCOpportunity/front-end-assignment#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2",
+    "cross-env": "^7.0.3"
+  }
+}
