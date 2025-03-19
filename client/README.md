@@ -8,4 +8,4 @@ The POST is also added to handle submit function.
 THe GET call what you shared in assignment is not giving any response. So for now i hard coded the form values.
 
 RUN:
-To run this use npm install and npm start to show the form in port:3000
+To run this go to Client folder and run npm install and npm start to show the form in port:3000
