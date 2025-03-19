@@ -6,4 +6,4 @@ So if you go to Formcomponent.js you will see all the logic created for form to 
 
 The GET call what you shared in assignment is not giving any response. So for now i hard coded the form values.
 
-RUN: To run this use npm install and npm start to show the form in port:3000
+RUN: To run this use go to client folder npm install and npm start to show the form in port:3000
