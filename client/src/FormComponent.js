@@ -1,32 +1,10 @@
 import React, { useState } from 'react';
 import { TextField, RadioGroup, FormControlLabel, Radio, Button, FormControl, FormLabel, FormHelperText, Box } from '@mui/material';
 
-document.addEventListener("DOMContentLoaded", async function () {
-  const form = document.getElementById("dynamic-form");
-  const questionContainer = document.getElementById("questions");
-  const submitBtn = document.getElementById("submit-btn");
-
-  // API to fetch questions (using placeholder API for demonstration)
-  const API_URL = "https://mocki.io/v1/84954ef5-462f-462a-b692-6531e75c220d";
-
-  try {
-      const response = await fetch(API_URL);
-      if (!response.ok) {
-          throw new Error("Failed to fetch questions.");
-      }
-      const formFields = await response.json();
-    }
-    catch (error) {
-    console.error("Error fetching questions:", error);
-    questionContainer.innerHTML = "<p>Failed to load questions. Please try again later.</p>";
-}
-}
-  );
-
   const formFields  = [
-  { id: '1111', label: 'First Name', name: 'nameFirst', type: 'text', required: 1 },
-  { id: '2222', label: 'Last Name', name: 'nameLast', type: 'text', required: 1 },
-  { id: '3333', label: 'Your Phone Number', name: 'contactPhone', type: 'tel', pattern: '[0-9]{10}', required: 0 },
+  { id: '1111', label: 'First Name', name: 'nameFirst', type: 'text', required: 1, Pattern: '[A-Z, a-z]' },
+  { id: '2222', label: 'Last Name', name: 'nameLast', type: 'text', required: 1, Pattern: '[A-Z, a-z]' },
+  { id: '3333', label: 'Your Phone Number', name: 'contactPhone', type: 'tel', required: 0, Pattern: '[0-9]{10}' },
   { id: '4444', label: 'Your Email', name: 'contactEmail', type: 'email', required: 0 },
   { 
     id: '5555', legend: 'Your preferred contact', name: 'contactPreferred', type: 'radio', required: 1,
@@ -44,6 +22,7 @@ const FormComponent = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormValues({ ...formValues, [name]: value });
+    
   };
 
   const validateForm = () => {
@@ -53,16 +32,25 @@ const FormComponent = () => {
       if (field.required && !formValues[field.name]) {
         tempErrors[field.name] = `${field.label} is required.`;
       }
-      if (field.pattern && !new RegExp(field.pattern).test(formValues[field.name] || '')) {
+      
+      if (field.Pattern && !new RegExp(field.Pattern).test(formValues[field.name] || '')) {
         tempErrors[field.name] = `Invalid ${field.label}.`;
       }
     });
 
     setErrors(tempErrors);
-    return Object.keys(tempErrors).length === 0; // Return true if no errors
+    return Object.keys(tempErrors).length === 0;
   };
 
+  function convertToArrayFormat(obj) {
+    return Object.entries(obj).map(([name, value]) => ({
+        name: name,
+        value: value
+    }));
+}
+
   const handleSubmit = async (e) => {
+    
     e.preventDefault();
     if (validateForm()) {
       try {
@@ -71,22 +59,13 @@ const FormComponent = () => {
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify(formValues),
+            body: JSON.stringify(convertToArrayFormat(formValues)),
         });
-
-        if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-
-        const result = await response.json();
-        console.log("Success:", result);
+        console.log(response.data);
     } catch (error) {
         console.error("Error:", error);
     }
-      console.log('Submitted Data:', formValues);
-    } else {
-      console.log('Please fix errors before submitting.');
-    }
+    } 
   };
 
   return (
