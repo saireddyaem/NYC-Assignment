@@ -61,6 +61,9 @@ const FormComponent = () => {
             },
             body: JSON.stringify(convertToArrayFormat(formValues)),
         });
+        if(response.status == 200) {
+          alert("Form Submitted");
+        }
         console.log(response.data);
     } catch (error) {
         console.error("Error:", error);
